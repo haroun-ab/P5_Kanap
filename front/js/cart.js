@@ -229,7 +229,7 @@ function postForm(form) {
 
     // Récupération de l'id de commande qu'on stockera par la suite dans l'URL de la page de confirmation pour le réutiliser
     function getOrderId(data) {
-      document.location.href = `/front/html/confirmation.html?id=${data.orderId}`;
+      document.location.href = `./confirmation.html?id=${data.orderId}`;
     }
   };
 }
