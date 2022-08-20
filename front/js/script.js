@@ -1,35 +1,37 @@
-fetch('http://localhost:3000/api/products') // 1. On fetch les données
+// Requête GET permettant de récupérer les données des produits depuis l'API
+fetch('http://localhost:3000/api/products')
   .then((res) => res.json())
-  .then((data) => addProduct(data)); // 2. puis on les passe à la fonction addProduct
+  .then((data) => addProducts(data));
 
-function addProduct(data) {
+// Ajout des données dans la page d'accueil en suivant le template
+function addProducts(data) {
   for (let i = 0; i < data.length; i++) {
-    // 3. qui grâce à une boucle, va reproduire le template dans le HTML en utilisant les données de l'API
+    // Pour chaque produit dans le tabelau "data" :
 
-    //link
+    // créer une url
     const id = data[i]._id;
     const a = document.createElement('a');
     a.href = `./product.html?id=${id}`;
     document.querySelector('#items').appendChild(a);
 
-    //article
+    // créer un article
     const article = document.createElement('article');
     a.appendChild(article);
 
-    //image
+    // insérer l'image du produit
     const img = document.createElement('img');
     img.src = data[i].imageUrl;
     img.alt = data[i].altTxt;
     article.appendChild(img);
 
-    //h3
+    // insérer le nom de produit
     const productName = data[i].name;
     const h3 = document.createElement('h3');
     h3.textContent = productName;
     h3.classList.add('productName');
     article.appendChild(h3);
 
-    //p
+    // insérer la description
     const productDescription = data[i].description;
     const p = document.createElement('p');
     p.textContent = productDescription;
