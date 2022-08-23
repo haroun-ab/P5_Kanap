@@ -2,10 +2,6 @@
 let totalQuantity = 0;
 let totalPrice = 0;
 
-// Si il n'y a pas de produit dans le panier, le formulaire ne s'affcihera pas
-if (localStorage.length === 0)
-  document.querySelector('.cart__order__form').style.display = 'none';
-
 // Itération pour chaque produit du local storage
 for (i = 0; i < localStorage.length; i++) {
   const key = localStorage.key(i);
@@ -152,7 +148,7 @@ function addDeleteBtnElement(cartData, settingsDiv) {
   deleteDiv.appendChild(deleteItem);
 }
 
-// Affichage du totaux des prix et des quantités
+// Affichage des totaux des prix et des quantités
 function calculateTotalQuantityAndPrice(cartData) {
   totalQuantity += cartData.quantity;
   document.querySelector('#totalQuantity').innerText = totalQuantity;
@@ -161,6 +157,9 @@ function calculateTotalQuantityAndPrice(cartData) {
   document.querySelector('#totalPrice').innerText = totalPrice;
 }
 // *************************** FORM *****************************
+// Si il n'y a pas de produit dans le panier, le formulaire ne s'affcihera pas
+if (localStorage.length === 0)
+  document.querySelector('.cart__order__form').style.display = 'none';
 
 const form = document.querySelector('.cart__order__form');
 const emailInput = form[4];

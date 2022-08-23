@@ -21,7 +21,9 @@ function displayOnProductPage(productData) {
   const name = productData.name;
   document.querySelector('h1').innerText = name;
   productName = name;
-
+  // Utilisation du nom du produit comme titre de la page
+  const title = document.querySelector('html title');
+  title.innerText = productName;
   // Ajout du prix produit
   const price = productData.price;
   document.querySelector('#price').innerText = price;
@@ -54,7 +56,7 @@ function saveOnLocalStorage() {
     imgUrl: imgUrl,
   };
 
-  // Si les deux paramètres ne sont pas sélectionnés, envoyer une alerte
+  // Si les deux paramètres n'ont pas été sélectionnés, envoyer une alerte
   if (userChoice.color == '' || userChoice.quantity === 0) {
     alert(`Veuillez sélectionner la couleur et la quantité souhaitées !`);
   } // Si le produit est déja présent dans le localStorage, la nouvelle quantité sélectionné s'ajoute à l'ancienne
