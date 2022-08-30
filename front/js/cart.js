@@ -254,7 +254,7 @@ function isCityValid(input) {
     activeBtn();
   }
 }
-// Le mail doit avoir cette forme = xxx@xxx.com
+// L'adresse mail doit avoir cette forme = xxx@xxx.com
 function isEmailValid(input) {
   const emailRegExp = new RegExp(
     '^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$',
