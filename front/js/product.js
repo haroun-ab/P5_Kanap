@@ -4,12 +4,14 @@ const id = new URLSearchParams(window.location.search).get('id');
 let productName = '';
 let priceOfProduct = 0;
 let imgUrl = '';
+getDataFromAPI();
 
 // Requête GET permettant de récupérer des données pour chaque produit depuis l'API grâce à leur ID
-fetch(`http://localhost:3000/api/products/${id}`)
-  .then((res) => res.json())
-  .then(displayOnProductPage);
-
+async function getDataFromAPI() {
+  const response = await fetch(`http://localhost:3000/api/products/${id}`);
+  const productData = await response.json();
+  displayOnProductPage(productData);
+}
 function displayOnProductPage(productData) {
   // Ajout de l'image du produit
   const img = document.createElement('img');
@@ -49,15 +51,12 @@ function saveOnLocalStorage() {
 
   const userChoice = {
     id: id,
-    color: colors.value,
+    color: window.colors.value,
     quantity: totalQuantity,
-    name: productName,
-    price: productPrice,
-    imgUrl: imgUrl,
   };
 
   // Si les deux paramètres n'ont pas été sélectionnés, envoyer une alerte
-  if (userChoice.color == '' || userChoice.quantity === 0) {
+  if (userChoice.color == '' || userChoice.quantity <= 0) {
     alert(`Veuillez sélectionner la couleur et la quantité souhaitées !`);
   } // Si le produit est déja présent dans le localStorage, la nouvelle quantité sélectionné s'ajoute à l'ancienne
   else {
@@ -78,7 +77,7 @@ function saveOnLocalStorage() {
       );
     }
     alert(
-      `Vous avez désormais ${userChoice.quantity} ${userChoice.name} dans le panier ! `
+      `Vous avez désormais ${userChoice.quantity} ${productName} dans le panier ! `
     );
   }
 }

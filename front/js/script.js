@@ -1,8 +1,10 @@
 // Requête GET permettant de récupérer les données des produits depuis l'API
-fetch('http://localhost:3000/api/products')
-  .then((res) => res.json())
-  .then((data) => addProducts(data));
-
+getDataFromAPI();
+async function getDataFromAPI() {
+  const response = await fetch('http://localhost:3000/api/products');
+  const productData = await response.json();
+  addProducts(productData);
+}
 // Ajout des données dans la page d'accueil en suivant le template
 function addProducts(data) {
   for (let i = 0; i < data.length; i++) {
