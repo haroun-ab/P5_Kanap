@@ -12,13 +12,11 @@ async function GetProductData(i, cartData) {
 }
 // Itération pour chaque produit du local storage
 for (let i = 0; i < localStorage.length; i++) {
-  const key = localStorage.key(i);
-  let cartData = JSON.parse(localStorage.getItem(key));
+  let cartData = JSON.parse(localStorage.getItem(localStorage.key(i)));
   GetProductData(i, cartData);
 }
 
 function displayCartProduct(i, productData, cartData) {
-  console.log(productData);
   createArticleElement(cartData);
   addImageElement(i, productData);
   addContentElement(i, cartData, productData);
@@ -130,7 +128,12 @@ function changeValues(i, cartData, quantityInput, productData) {
     calculateTotalQuantityAndPrice(cartData, productData);
   } else {
     alert('Veuillez saisir une quantité valide.');
-    document.querySelectorAll('.itemQuantity')[i].valueAsNumber = 1;
+    if (quantityInput.value == 0) {
+      document.querySelectorAll('.itemQuantity')[i].valueAsNumber = 1;
+    } else {
+      document.querySelectorAll('.itemQuantity')[i].valueAsNumber =
+        -document.querySelectorAll('.itemQuantity')[i].valueAsNumber;
+    }
   }
 }
 
@@ -216,7 +219,6 @@ function isFirstNameValid(input) {
 }
 // Le nom ne doit pas posséder de chiffres
 function isLastNameValid(input) {
-  console.log(input.value.length);
   input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1);
   const lastNameRegExp = new RegExp('^[A-Za-zéèêôöîïâäàûüùç -]+$', 'g');
   if (input.value.length < 2 || input.value == '') {
@@ -287,18 +289,10 @@ function postForm(form) {
   form.onsubmit = (e) => {
     e.preventDefault();
     // Extraction de l' id des produits à partir de leur clé
-    const key =
-      document
-        .querySelector('.deleteItem')
-        .closest('.cart__item')
-        .getAttribute('data-id') +
-      ' ' +
-      document
-        .querySelector('.deleteItem')
-        .closest('.cart__item')
-        .getAttribute('data-color');
-
-    const id = key.split(' ')[0];
+    const id = document
+      .querySelector('.deleteItem')
+      .closest('.cart__item')
+      .getAttribute('data-id');
 
     // Structure de la requête attendu par l'API
     const formValues = {
@@ -335,8 +329,6 @@ async function postUserCart(formValues) {
 
 // Récupération de l'id de commande qu'on stockera par la suite dans l'URL de la page de confirmation pour le réutiliser
 function getOrderId(data) {
-  console.log(data);
-  console.log(data.orderId);
   document.location.href = `./confirmation.html?id=${data.orderId}`;
   deleteCart();
 }

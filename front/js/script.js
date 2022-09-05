@@ -7,9 +7,8 @@ async function getDataFromAPI() {
 }
 // Ajout des données dans la page d'accueil en suivant le template
 function addProducts(data) {
+  // Pour chaque produit dans le tabelau "data" :
   for (let i = 0; i < data.length; i++) {
-    // Pour chaque produit dans le tabelau "data" :
-
     // créer une url
     const id = data[i]._id;
     const a = document.createElement('a');
